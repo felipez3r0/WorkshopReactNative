@@ -81,3 +81,50 @@ export default function App() {
   )
 }
 ```
+
+## Etapa 3 - Adotando o Gluestack UI
+
+O Gluestack UI é uma biblioteca de componentes React Native que facilita a criação de interfaces de usuário. Para criar um projeto com o Gluestack UI junto do Expo e do Expo Router V3, execute o comando abaixo:
+
+```bash
+npm create gluestack
+```
+
+Selecione a opção `Expo + Gluestack UI + Expo Router V3` e siga as instruções para criar o projeto.
+
+A estrutura de pastas e arquivos do projeto é semelhante ao projeto anterior, mas com a adição de novos componentes e agira a pasta app está utilizando o Expo Router V3.
+
+No arquivo `_layout.tsx` podemos observar que o Gluestack foi adicionado ao redor da aplicação:
+
+```tsx 
+    <GluestackUIProvider config={config}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Slot />
+      </ThemeProvider>
+    </GluestackUIProvider>
+```
+
+Vamos simplicar as coisas e remover a pasta `tabs` que não será utilizada aqui no projeto (mas que pode ser estudada para entender como funciona a navegação por tabs do Expo Router V3).
+
+No nosso arquivo `index.tsx` vamos simplificar tudo também e deixar apenas um Olá mundo por enquanto.
+
+```tsx
+import {
+  Box,
+  ScrollView,
+  Text,
+} from "@gluestack-ui/themed";
+
+export default function Home() {
+  return (
+    <Box flex={1} alignItems="center" justifyContent="center">
+      <ScrollView
+        style={{ height: "100%" }}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      >
+        <Text>Olá mundo!</Text>
+      </ScrollView>
+    </Box>
+  );
+}
+```
