@@ -128,3 +128,88 @@ export default function Home() {
   );
 }
 ```
+
+## Etapa 4 - App para calcular Gasolina x Álcool
+
+Vamos criar um aplicativo simples para calcular se é mais vantajoso abastecer com gasolina ou álcool. Para isso, criamos um novo componente chamado `FuelCalculator`:
+
+```tsx
+import React, { useState } from "react";
+import {
+  VStack,
+  Button,
+  ButtonText,
+  Input,
+  InputField,
+  Text,
+} from "@gluestack-ui/themed";
+
+export function FuelCalculator() {
+  const [gasolinePrice, setGasolinePrice] = useState("");
+  const [etanolPrice, setEtanolPrice] = useState("");
+  const [result, setResult] = useState("");
+
+  function calculate() {
+    const gasPrice = parseFloat(gasolinePrice);
+    const alcPrice = parseFloat(etanolPrice);
+
+    if (gasPrice && alcPrice) {
+      const result = alcPrice / gasPrice;
+
+      if (result < 0.7) {
+        setResult("Abasteça com etanol!");
+      } else {
+        setResult("Abasteça com gasolina!");
+      }
+    }
+  }
+
+  return (
+    <VStack space="md" reversed={false}>
+      <Text textAlign="center">Preço da gasolina</Text>
+      <Input>
+        <InputField
+          value={gasolinePrice}
+          onChangeText={setGasolinePrice}
+          placeholder="R$ preço da gasolina"
+          keyboardType="numeric"
+        />
+      </Input>
+
+      <Text textAlign="center">Preço do etanol</Text>
+      <Input variant="outline" size="md">
+        <InputField
+          value={etanolPrice}
+          onChangeText={setEtanolPrice}
+          placeholder="R$ preço do etanol"
+          keyboardType="numeric"
+        />
+      </Input>
+
+      <Button marginTop={5}>
+        <ButtonText onPress={calculate}>Verificar</ButtonText>
+      </Button>
+
+      <Text textAlign="center" size="lg" fontWeight='bold'>{result}</Text>
+    </VStack>
+  );
+}
+```
+
+Podemos utilizar o componente `FuelCalculator` em nosso aplicativo da seguinte forma:
+
+```tsx
+import { Box, Text, VStack } from "@gluestack-ui/themed";
+import { FuelCalculator } from "../components/fuel-calculator";
+
+export default function Home() {
+  return (
+    <Box flex={1} alignItems="center" justifyContent="center">
+      <VStack space="md" reversed={false}>
+        <Text size="lg" fontWeight='bold'>Calculadora de combustível</Text>
+        <FuelCalculator />
+      </VStack>
+    </Box>
+  );
+}
+```
